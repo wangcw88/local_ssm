@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,7 +32,7 @@ public class UserController {
             //String password = request.getParameter("password");
             User u = userDao.selectByUsername(username);
 
-            System.out.println("<<<<<<<<<<<W O T K~!>>>>>>>>>>>");
+           // System.out.println("<<<<<<<<<<<W O T K~!>>>>>>>>>>>");
 
             json = new HashMap<String, String>();
 
@@ -70,7 +72,10 @@ public class UserController {
 
 
             System.out.println("<<<<<<<<<<<R O T K~!>>>>>>>>>>>");
-            System.out.println("username = "+username+" password = "+password);
+            //显示时间
+            Date now = new Date();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            System.out.println("username = "+username+" password = "+password+" time = "+ dateFormat.format( now ));
 
             json = new HashMap<String, String>();
 
@@ -93,7 +98,6 @@ public class UserController {
 
         } catch (Exception e) {
             e.printStackTrace();
-
         }
         return null;
     }

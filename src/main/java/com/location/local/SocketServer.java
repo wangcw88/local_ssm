@@ -2,21 +2,30 @@ package com.location.local;
 
 import com.location.local.algorithm.GpsAlgo;
 import com.location.local.algorithm.WifiAlgo;
+import com.location.local.SocketServer;
+import com.location.local.dao.UserDao;
 import com.location.local.model.User;
+import com.location.local.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
+import java.net.*;
 import static java.lang.Double.valueOf;
 
-public class SocketServer implements Runnable{
-    public java.net.Socket client = null;
+
+public class SocketServer implements Runnable {
+    public Socket client = null;
     String imei;
-    public SocketServer(java.net.Socket client) {
+
+
+    public SocketServer(Socket client) {
         this.client = client;
     }
 
@@ -83,7 +92,6 @@ public class SocketServer implements Runnable{
                 //打印服务器回复设备的数据 16进制数显示发送
                 //System.out.println(bytesToHexString(replyToDevice(byHex, x)));
                 //System.out.println();
-
             }
             //关闭socket输入
             client.shutdownInput();
@@ -122,7 +130,6 @@ public class SocketServer implements Runnable{
 
         byte[] b_u =new byte[]{0x78,0x78, 0x03, (byte) 0x97 ,0x00,0x0E, 0x0D,0x0A};
 
-
         try {
             //获取输出流
             OutputStream os = client.getOutputStream();
@@ -155,7 +162,7 @@ public class SocketServer implements Runnable{
                     L[0]=GpsAlgo.GpsLocation(GpsAlgo.gpsLatAddress(bytes));
                     L[1]=GpsAlgo.GpsLocation(GpsAlgo.gpsLonAddress(bytes));
 
-                    saveInSQL(L);
+                    //UserService.saveInSQL(L);
                     //return strToByteArray(GpsServer.getGpsTime(bytes));
 
                 }
@@ -192,7 +199,8 @@ public class SocketServer implements Runnable{
                     //进行三角定位 并插入或者更新数据库
                     if (a & b & c) {
                         D = WifiAlgo.locAlgorithm(A, B, C);
-                        saveInSQL(D);
+                        new UserService().saveInSQL(D);
+
                     }
 
 
@@ -243,7 +251,6 @@ public class SocketServer implements Runnable{
         }
 
     }
-
 
 
     //0x69或0x17协议下回复系统时间  例如2018/5/10 20:12:23 转换为 0x18 0x05 0x10 0x20 0x12 0x23
@@ -427,12 +434,29 @@ public class SocketServer implements Runnable{
         return newArrays;
     }
 
-
-    private void saveInSQL(double[] D){
-
-        //UserDaoImp userDaoImp = new UserDaoImp();
-
-        User user = new User();
+//    @Autowired
+//    static UserDao userDao;
+//    private void saveInSQL(double[] D){
+//
+//        User user=new User();
+//        user.setUsername("wang");
+////        user=userDao.selectByUsername("wangcw");
+//        if(user.getUsername().equals("wang")){
+////            user.setLng("111");
+////            user.setLat("222");
+//            user.setLng(String.valueOf(D[0]));
+//            user.setLat(String.valueOf(D[1]));
+//
+//            System.out.println(user);
+//            //userDao.updateLocation(user);
+//            System.out.println("更新成功");
+//        }else{
+//            user.setUsername("wang");
+//            user.setLng(String.valueOf(D[0]));
+//            user.setLat(String.valueOf(D[1]));
+//            userDao.updateLocation(user);
+//            System.out.println("插入成功");
+//        }
 
 //        if (userDaoImp.Findusername("wangcw")) {
 //            //更新数据库
@@ -443,7 +467,7 @@ public class SocketServer implements Runnable{
 //            userDaoImp.create(String.valueOf(D[1]), String.valueOf(D[0]), "wangcw");
 //            System.out.println("插入成功");
 //        }
-    }
+//    }
 
     private static String getImei(byte[] bytes){
         StringBuilder imei =new StringBuilder();

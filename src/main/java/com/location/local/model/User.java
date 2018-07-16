@@ -12,7 +12,7 @@ public class User {
     private String wifi;
     private String lbs;
 
-//    public User(Long id, String username, String password, String lng,
+//    public User(int id, String username, String password, String lng,
 //                String lat, String gps, String wifi, String lbs) {
 //        this.id = id;
 //        this.username = username;
@@ -35,6 +35,14 @@ public class User {
 
     public String getUsername() {
         return username;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "lng='" + lng + '\'' +
+                ", lat='" + lat + '\'' +
+                '}';
     }
 
     public void setUsername(String username) {
