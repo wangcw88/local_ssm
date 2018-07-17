@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.text.SimpleDateFormat;
@@ -19,15 +20,14 @@ import java.util.Map;
 @Controller
 public class LocationController {
 
-    @Autowired
+    @Resource
     LocationDao locationDao;
 
-    @Autowired
+    @Resource
     UserDao userDao;
 
     Map<String, String> json;
     byte[] jsonBytes;
-
 
     // 请求url地址映射，类似Struts的action-mapping-----请求注册
     @RequestMapping("/gpslocation")
