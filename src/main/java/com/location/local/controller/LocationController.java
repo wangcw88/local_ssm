@@ -37,6 +37,8 @@ public class LocationController {
             String latitude = request.getParameter("latitude");
             String longitude = request.getParameter("longitude");
             System.out.println("<<<<<<<<<<<　ＧＥＴ　ＧＰＳ　ＭＳＧ　>>>>>>>>>>>");
+            System.out.println(latitude);
+            System.out.println(longitude);
             json = new HashMap<String, String>();
             Date now = new Date();
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -46,7 +48,7 @@ public class LocationController {
             Location location = new Location();
             location.setDate_time(now);
             location.setUsername(username);
-            locationDao.addLocation(location );
+            //locationDao.addLocation(location );
 
             //更新用户的位置信息
             location.setGps_lat(latitude);
@@ -55,16 +57,16 @@ public class LocationController {
             location.setWifi_lng(SocketServer.wifi_lon);
             location.setLbs_lat("1");
             location.setLbs_lng("1");
-            locationDao.updateLocation(location);
+            locationDao.addLocation(location);
 
             //更新用户信息
-            User user = userDao.selectByUsername(username);
-            user.setLng(SocketServer.wifi_lon);
-            user.setLat(SocketServer.wifi_lon);
-            user.setGps("0");
-            user.setLbs("0");
-            user.setWifi("0");
-            userDao.updateLocation(user);
+//            User user = userDao.selectByUsername(username);
+//            user.setLng(SocketServer.wifi_lon);
+//            user.setLat(SocketServer.wifi_lat);
+//            user.setGps("0");
+//            user.setLbs("0");
+//            user.setWifi("0");
+//            userDao.updateLocation(user);
 
 
             jsonBytes = json.toString().getBytes("utf-8");
@@ -86,12 +88,14 @@ public class LocationController {
 
             User user = userDao.selectByUsername(username);
 
-            // System.out.println("<<<<<<<<<<<W O T K~!>>>>>>>>>>>");
+            System.out.println("<<<<<<<<<<<W O T K~!>>>>>>>>>>>");
 
             json = new HashMap<String, String>();
             if (user.getLat() != null && user.getLng() != null) {
                 json.put("lng", user.getLng());
                 json.put("lat", user.getLat());
+                json.put("gps", user.getGps());
+                json.put("wifi", user.getWifi());
             }
 
 
@@ -101,11 +105,7 @@ public class LocationController {
             response.getOutputStream().flush();
             response.getOutputStream().close();
 
-            //显示时间
-//            Date now = new Date();
-//            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");//可以方便地修改日期格式
-//
-//            System.out.println("lng = "+u.getLng()+" lat = "+u.getLat()+" time = "+dateFormat.format( now ));
+
 
         } catch (Exception e) {
             e.printStackTrace();

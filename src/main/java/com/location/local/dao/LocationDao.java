@@ -17,8 +17,8 @@ public interface LocationDao {
     String SELECT_FIELDS = "id, " + INSERT_FIELDS;
 
     //插入
-    @Insert({"insert into ", TABLE_NAME,"(","username, created_time",
-            ") values (#{username},#{created_time})"})
+    @Insert({"insert into ", TABLE_NAME,"(",INSERT_FIELDS,
+            ") values (#{username},#{wifi_lng},#{wifi_lat},#{gps_lng},#{gps_lat},#{lbs_lng},#{lbs_lat},#{created_time})"})
     int addLocation(Location location);
 
     //通过时间及用户查定位数据
