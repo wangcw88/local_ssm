@@ -70,7 +70,6 @@ public class UserController {
             String username = request.getParameter("username");
             String password = request.getParameter("password");
 
-
             System.out.println("<<<<<<<<<<<R O T K~!>>>>>>>>>>>");
             //显示时间
             Date now = new Date();
@@ -81,7 +80,7 @@ public class UserController {
 
             User user = userDao.selectByUsername(username);
 
-            if (user.getPassword().equals(password)) {
+            if (user !=null && user.getPassword().equals(password)) {
                 json.put("login", "登陆成功，欢迎使用机场行李定位系统!");
 
             } else {
@@ -90,9 +89,7 @@ public class UserController {
 
             jsonBytes = json.toString().getBytes("utf-8");
             response.setContentLength(jsonBytes.length);
-
             response.getOutputStream().write(jsonBytes);
-
             response.getOutputStream().flush();
             response.getOutputStream().close();
 
@@ -101,6 +98,44 @@ public class UserController {
         }
         return null;
     }
+    // 请求url地址映射，类似Struts的action-mapping-----请求注册
+    @RequestMapping("/register")
+    public  Object Register(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            String username = request.getParameter("username");
+            String password = request.getParameter("password");
+            String passwordagain = request.getParameter("passwordagain");
+            System.out.println("<<<<<<<<<<<REGISTER USER!>>>>>>>>>>>");
+            json = new HashMap<String, String>();
+            if (password.equals(passwordagain)) {
+
+                User user = new User();
+                user.setUsername(username);
+                user.setPassword(password);
+                userDao.addUser(user);
+
+                if (user.getPassword().equals(password)) {
+                    json.put("register", "注册成功!");
+
+                } else {
+                    json.put("register", "注册失败！请重试!");
+                }
+            } else {
+                json.put("register", "二次密码不同！请重新输入密码");
+            }
+
+            jsonBytes = json.toString().getBytes("utf-8");
+            response.setContentLength(jsonBytes.length);
+            response.getOutputStream().write(jsonBytes);
+            response.getOutputStream().flush();
+            response.getOutputStream().close();
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
 
 
 }

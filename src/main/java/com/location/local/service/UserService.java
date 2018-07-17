@@ -4,21 +4,27 @@ import com.location.local.dao.UserDao;
 import com.location.local.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 
-@Service
-public class UserService  {
+@Controller
+public class UserService {
     //public UserService(){}
-    @Autowired
-    UserDao userDao;
-    public void saveInSQL(double[] D){
+    @Resource
+    private UserDao userDao;
 
-        User user;
-        //user.setUsername("wang");
-        user=userDao.selectByUsername("wangcw");
-        if(user.getUsername().equals("wangcw")){
+    public User selectByUsername(String username) {
+        return userDao.selectByUsername(username);
+    }
+
+    public void saveInSQL(double[] D){
+        UserService userService = new UserService();
+
+        User user = userService.selectByUsername("qwer");
+
+        if(user.getUsername().equals("qwer")){
 //            user.setLng("111");
 //            user.setLat("222");
             user.setLng(String.valueOf(D[0]));
@@ -28,7 +34,7 @@ public class UserService  {
             userDao.updateLocation(user);
             System.out.println("更新成功");
         }else{
-            user.setUsername("wang");
+            user.setUsername("qwer");
 //            user.setLng(String.valueOf(D[0]));
 //            user.setLat(String.valueOf(D[1]));
             userDao.updateLocation(user);
@@ -36,4 +42,5 @@ public class UserService  {
         }
 
     }
+
 }

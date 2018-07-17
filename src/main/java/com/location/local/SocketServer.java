@@ -7,10 +7,13 @@ import com.location.local.dao.UserDao;
 import com.location.local.model.User;
 import com.location.local.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -19,15 +22,24 @@ import java.util.Date;
 import java.net.*;
 import static java.lang.Double.valueOf;
 
-
+//@ComponentScan("com.location.local")
 public class SocketServer implements Runnable {
+
+    public static String wifi_lat=null;
+    public static String wifi_lon=null;
+//    ApplicationContext appCtx = SpringTool.getApplicationContext();
+//    StatusMapper statusMapper = (StatusMapper)appCtx.getBean(StatusMapper.class);
+
     public Socket client = null;
     String imei;
-
 
     public SocketServer(Socket client) {
         this.client = client;
     }
+
+//    public void setClient(Socket client) {
+//        this.client = client;
+//    }
 
     //字符转16进制
     public static String bytesToHexString(byte[] b) {
@@ -199,6 +211,8 @@ public class SocketServer implements Runnable {
                     //进行三角定位 并插入或者更新数据库
                     if (a & b & c) {
                         D = WifiAlgo.locAlgorithm(A, B, C);
+                        wifi_lat = String.valueOf(D[1]);
+                        wifi_lon = String.valueOf(D[0]);
                         new UserService().saveInSQL(D);
 
                     }

@@ -1,10 +1,7 @@
 package com.location.local.dao;
 
-import com.location.local.model.Location;
 import com.location.local.model.User;
 import org.apache.ibatis.annotations.*;
-
-import java.util.List;
 
 @Mapper
 public interface UserDao {
@@ -32,5 +29,7 @@ public interface UserDao {
     //删除用户
     @Delete({"delete from", TABLE_NAME," where username = #{username}"})
     void deleteByUsername(String username);
+
+
 
 }

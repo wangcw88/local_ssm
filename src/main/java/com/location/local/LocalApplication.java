@@ -19,15 +19,20 @@ import java.net.Socket;
 @Component("com.location.local")
 //@Sql("/init-schema.sql")
 public class LocalApplication {
-
+//    @Autowired
+//    SocketServer socketServer;
 
     public static void main(String[] args) throws Exception{
 
         SpringApplication.run(LocalApplication.class, args);
+         new LocalApplication().function();
 
+    }
 
+    public void function()throws Exception{
         ServerSocket server = new ServerSocket(10006);
         Socket client = null;
+
         //循环监听等待客户端的连接
         while(true){
             //等待客户端的连接，如果没有获取连接
@@ -36,6 +41,7 @@ public class LocalApplication {
             System.out.println("与客户端连接成功！");
             //为每个客户端连接开启一个线程
             new Thread(new SocketServer(client)).start();
+
             //System.out.println("连接设备的ip为:"+ip);
         }
     }
