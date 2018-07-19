@@ -30,27 +30,19 @@ public class DatabaseTests {
         if(user.getUsername().equals("wangcw")){
             user.setLng("111");
             user.setLat("222");
-//            user.setLng(String.valueOf(D[0]));
-//            user.setLat(String.valueOf(D[1]));
+
 
             System.out.println(user);
             userDao.updateLocation(user);
             System.out.println("更新成功");
         }else{
             user.setUsername("wang");
-//            user.setLng(String.valueOf(D[0]));
-//            user.setLat(String.valueOf(D[1]));
+
             userDao.updateLocation(user);
             System.out.println("插入成功");
         }
         if(true ) {
-//            User user = new User();
-//            user.setUsername("zxc");
-//            user.setPassword("123");
-//            userDao.addUser(user);
-//            user.setLat("11");
-//            user.setLng("22");
-//            userDao.updateLocation(user);
+
             System.out.println("hello");
             userDao.deleteByUsername("zxc");
         }

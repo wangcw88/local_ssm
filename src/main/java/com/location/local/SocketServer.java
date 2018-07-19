@@ -23,6 +23,7 @@ import java.net.*;
 import static java.lang.Double.valueOf;
 
 //@ComponentScan("com.location.local")
+
 public class SocketServer implements Runnable {
 
     public static String wifi_lat=null;
@@ -217,10 +218,8 @@ public class SocketServer implements Runnable {
 
                     }
 
-
                     //更新设备位置信息
                     if(bytes[6] == 54 && bytes[7] == 57){
-                        // return timeConvert_69();
                         os.write(timeConvert_69());
                         os.flush();
                         System.out.println(bytesToHexString(timeConvert_69()));
@@ -228,15 +227,9 @@ public class SocketServer implements Runnable {
 
                     }
                     else if((bytes[6] == 56 && bytes[7] == 48 && bytes[5] == 50 && bytes[4]==48)){
-                        //return b_heart;
-                        //os.write(b_st);
-                        //os.flush();
-                        //System.out.println(bytesToHexString(b_st));
                         System.out.println();
-
                     }
                     else {
-                        //return timeConvert_17();
                         os.write(timeConvert_17());
                         os.flush();
                         System.out.println(bytesToHexString(timeConvert_17()));
@@ -245,19 +238,13 @@ public class SocketServer implements Runnable {
                 }
 
                 //离线wifi数据协议0x17
-
-
                 //同步设置数据协议0x57
                 if (bytes[6] == 53 && bytes[7] == 55) {
-                    //return b_synchronize;
                     os.write(b_synchronize);
                     os.flush();
                     System.out.println(bytesToHexString(b_synchronize));
                     System.out.println();
                 }
-
-
-
             }
 
         } catch (Exception e) {

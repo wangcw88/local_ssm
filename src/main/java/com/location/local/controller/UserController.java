@@ -48,17 +48,9 @@ public class UserController {
             response.getOutputStream().flush();
             response.getOutputStream().close();
 
-            //显示时间
-//            Date now = new Date();
-//            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");//可以方便地修改日期格式
-//
-//            System.out.println("lng = "+u.getLng()+" lat = "+u.getLat()+" time = "+dateFormat.format( now ));
-
         } catch (Exception e) {
             e.printStackTrace();
-
         }
-
         return null;
     }
 

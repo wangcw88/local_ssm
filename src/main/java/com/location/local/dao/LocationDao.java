@@ -39,6 +39,4 @@ public interface LocationDao {
     void deleteByUsername(String username);
 
 
-
-
 }

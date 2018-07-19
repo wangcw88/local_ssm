@@ -45,6 +45,7 @@ public class LocationController {
             System.out.println(dateFormat.format( now ));
 
             //插入用户名和时间
+            User user = userDao.selectByUsername(username);
             Location location = new Location();
             location.setDate_time(now);
             location.setUsername(username);
@@ -53,8 +54,9 @@ public class LocationController {
             //更新用户的位置信息
             location.setGps_lat(latitude);
             location.setGps_lng(longitude);
-            location.setWifi_lat(SocketServer.wifi_lat);
-            location.setWifi_lng(SocketServer.wifi_lon);
+
+            location.setWifi_lat(user.getLat());
+            location.setWifi_lng(user.getLng());
             location.setLbs_lat("1");
             location.setLbs_lng("1");
             locationDao.addLocation(location);

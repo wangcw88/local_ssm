@@ -14,6 +14,7 @@ public interface UserDao {
             ") values (#{username}, #{password})"})
     int addUser(User user);
 
+
     //通过用户查询位置
     @Select({"select", SELECT_FIELDS, "from", TABLE_NAME, "where username = #{username}"})
     User selectByUsername(String username);
