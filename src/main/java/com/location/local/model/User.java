@@ -12,17 +12,6 @@ public class User {
     private String wifi;
     private String lbs;
 
-//    public User(int id, String username, String password, String lng,
-//                String lat, String gps, String wifi, String lbs) {
-//        this.id = id;
-//        this.username = username;
-//        this.password = password;
-//        this.lng = lng;
-//        this.lat = lat;
-//        this.gps = gps;
-//        this.wifi = wifi;
-//        this.lbs = lbs;
-//    }
     public User(){ }
 
     public String getLbs() { return lbs; }

@@ -2,13 +2,18 @@ package com.location.local;
 
 import com.location.local.dao.UserDao;
 import com.location.local.model.User;
+import com.location.local.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 import org.springframework.test.context.jdbc.Sql;
 
 import com.location.local.SocketServer;
+
+import javax.annotation.Resource;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -16,18 +21,16 @@ import java.net.Socket;
 //外网ip：202.104.27.84:3080----->内网ip:172.21.102.7:8081
 //外网ip：202.104.27.84:3084----->内网ip:172.21.102.7:10006
 @SpringBootApplication
-@Component("com.location.local")
+//@Component("com.location.local")
+//@Component
 //@Sql("/init-schema.sql")
 public class LocalApplication {
-//    @Autowired
-//    SocketServer socketServer;
-
     public static void main(String[] args) throws Exception{
 
         SpringApplication.run(LocalApplication.class, args);
          new LocalApplication().function();
-
     }
+
 
     public void function()throws Exception{
         ServerSocket server = new ServerSocket(10006);

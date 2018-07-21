@@ -8,25 +8,20 @@ import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-
-@Controller
+@Service
 public class UserService {
     //public UserService(){}
     @Resource
     private UserDao userDao;
 
-    public User selectByUsername(String username) {
-        return userDao.selectByUsername(username);
-    }
 
-    public void saveInSQL(double[] D){
-        UserService userService = new UserService();
+    public void saveInSQL(double[] D, String username){
 
-        User user = userService.selectByUsername("qwer");
 
+        User user = userDao.selectByUsername(username);
         if(user.getUsername().equals("qwer")){
-//            user.setLng("111");
-//            user.setLat("222");
+            user.setLng("111");
+            user.setLat("222");
             user.setLng(String.valueOf(D[0]));
             user.setLat(String.valueOf(D[1]));
 
@@ -41,6 +36,13 @@ public class UserService {
             System.out.println("插入成功");
         }
 
+    }
+    public void aaa(double[] D){
+
+        User user=userDao.selectByUsername("wcw");
+        user.setLng(String.valueOf(D[0]));
+        user.setLat(String.valueOf(D[1]));
+        userDao.updateLocation(user);
     }
 
 }

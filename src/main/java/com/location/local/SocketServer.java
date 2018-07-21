@@ -7,8 +7,11 @@ import com.location.local.dao.UserDao;
 import com.location.local.model.User;
 import com.location.local.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.SpringBootConfiguration;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
@@ -20,16 +23,21 @@ import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.net.*;
+import java.net.Socket;
 import static java.lang.Double.valueOf;
 
 //@ComponentScan("com.location.local")
+
 
 public class SocketServer implements Runnable {
 
     public static String wifi_lat=null;
     public static String wifi_lon=null;
-//    ApplicationContext appCtx = SpringTool.getApplicationContext();
-//    StatusMapper statusMapper = (StatusMapper)appCtx.getBean(StatusMapper.class);
+
+    ApplicationContext appCtx = SpringTool.getApplicationContext();
+    UserService userService = (UserService)appCtx.getBean(UserService.class);
+
+
 
     public Socket client = null;
     String imei;
@@ -37,10 +45,6 @@ public class SocketServer implements Runnable {
     public SocketServer(Socket client) {
         this.client = client;
     }
-
-//    public void setClient(Socket client) {
-//        this.client = client;
-//    }
 
     //字符转16进制
     public static String bytesToHexString(byte[] b) {
@@ -70,6 +74,10 @@ public class SocketServer implements Runnable {
     @Override
     public void run() {
         try {
+//            double[] D = new double[2];
+//            D[0]=113.0;
+//            D[1]=23.0;
+//            userService.aaa(D);
             //获取输入流 并读取客户端信息
             InputStream is = client.getInputStream();
 
@@ -214,7 +222,8 @@ public class SocketServer implements Runnable {
                         D = WifiAlgo.locAlgorithm(A, B, C);
                         wifi_lat = String.valueOf(D[1]);
                         wifi_lon = String.valueOf(D[0]);
-                        new UserService().saveInSQL(D);
+
+                        userService.saveInSQL(D,getLast6ID(getImei(bytes)));
 
                     }
 
@@ -486,6 +495,7 @@ public class SocketServer implements Runnable {
     private static String getLast6ID(String str){
         return str.substring(str.length()-6);
     }
+
 
 }
 

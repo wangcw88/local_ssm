@@ -6,7 +6,7 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 
 @Component
-public final class SpringTool implements ApplicationContextAware {
+public class SpringTool implements ApplicationContextAware {
     private static ApplicationContext applicationContext = null;
 
     @Override
@@ -27,17 +27,20 @@ public final class SpringTool implements ApplicationContextAware {
         return getApplicationContext().getBean(name);
     }
 
+    public static <T> T getBean(Class<T> clazz){return getApplicationContext().getBean(clazz);}
+
+    public static <T> T getBean(String name,Class<T> clazz){return getApplicationContext().getBean(name,clazz);}
     /**
      * 如果BeanFactory包含一个与所给名称匹配的bean定义，则返回true
      */
-    public static boolean containsBean(String name) {
-        return applicationContext.containsBean(name);
-    }
-
-    /***
-     * 根据一个bean的类型获取配置文件中相应的bean
-     */
-    public static <T> T getBeanByClass(Class<T> requiredType) throws BeansException {
-        return applicationContext.getBean(requiredType);
-    }
+//    public static boolean containsBean(String name) {
+//        return applicationContext.containsBean(name);
+//    }
+//
+//    /***
+//     * 根据一个bean的类型获取配置文件中相应的bean
+//     */
+//    public static <T> T getBeanByClass(Class<T> requiredType) throws BeansException {
+//        return applicationContext.getBean(requiredType);
+//    }
 }
