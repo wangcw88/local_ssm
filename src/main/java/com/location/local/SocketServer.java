@@ -222,7 +222,6 @@ public class SocketServer implements Runnable {
                         D = WifiAlgo.locAlgorithm(A, B, C);
                         wifi_lat = String.valueOf(D[1]);
                         wifi_lon = String.valueOf(D[0]);
-
                         userService.saveInSQL(D,getLast6ID(getImei(bytes)));
 
                     }
