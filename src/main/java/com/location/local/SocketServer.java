@@ -226,7 +226,6 @@ public class SocketServer implements Runnable {
                         userService.saveInSQL(D,getLast6ID(getImei(bytes)));
 
                     }
-
                     //更新设备位置信息
                     if(bytes[6] == 54 && bytes[7] == 57){
                         os.write(timeConvert_69());
