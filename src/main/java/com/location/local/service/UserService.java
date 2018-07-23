@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 @Service
 public class UserService {
-    //public UserService(){}
+
     @Resource
     private UserDao userDao;
 
@@ -19,9 +19,9 @@ public class UserService {
 
 
         User user = userDao.selectByUsername(username);
-        if(user.getUsername().equals("qwer")){
-            user.setLng("111");
-            user.setLat("222");
+        if(user.getUsername().equals(username)){
+//            user.setLng("111");
+//            user.setLat("222");
             user.setLng(String.valueOf(D[0]));
             user.setLat(String.valueOf(D[1]));
 
@@ -30,8 +30,8 @@ public class UserService {
             System.out.println("更新成功");
         }else{
             user.setUsername("qwer");
-//            user.setLng(String.valueOf(D[0]));
-//            user.setLat(String.valueOf(D[1]));
+            user.setLng(String.valueOf(D[0]));
+            user.setLat(String.valueOf(D[1]));
             userDao.updateLocation(user);
             System.out.println("插入成功");
         }

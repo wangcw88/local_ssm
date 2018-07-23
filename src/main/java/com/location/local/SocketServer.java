@@ -1,10 +1,12 @@
 package com.location.local;
 
 import com.location.local.algorithm.GpsAlgo;
+import com.location.local.algorithm.LbsAlgo;
 import com.location.local.algorithm.WifiAlgo;
 import com.location.local.SocketServer;
 import com.location.local.dao.UserDao;
 import com.location.local.model.User;
+import com.location.local.service.LocationService;
 import com.location.local.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringBootConfiguration;
@@ -36,6 +38,7 @@ public class SocketServer implements Runnable {
 
     ApplicationContext appCtx = SpringTool.getApplicationContext();
     UserService userService = (UserService)appCtx.getBean(UserService.class);
+    LocationService locationService = (LocationService)appCtx.getBean(LocationService.class);
 
 
 
@@ -217,14 +220,23 @@ public class SocketServer implements Runnable {
                     b = wifiMsg(array, 2, B, false);
                     c = wifiMsg(array, 3, C, false);
 
+                    //对LBS数据进行处理
+                    LbsAlgo.LBSLocation(LbsAlgo.lbsToLac(count,bytes),LbsAlgo.lbsToCi(count,bytes));
+
                     //进行三角定位 并插入或者更新数据库
                     if (a & b & c) {
                         D = WifiAlgo.locAlgorithm(A, B, C);
+
                         wifi_lat = String.valueOf(D[1]);
                         wifi_lon = String.valueOf(D[0]);
-                        userService.saveInSQL(D,getLast6ID(getImei(bytes)));
+                        locationService.saveApInDb(A,B,C,"qwer");
+                        userService.saveInSQL(D,"qwer");
 
                     }
+
+
+
+
                     //更新设备位置信息
                     if(bytes[6] == 54 && bytes[7] == 57){
                         os.write(timeConvert_69());

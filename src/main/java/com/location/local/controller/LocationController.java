@@ -65,16 +65,6 @@ public class LocationController {
             location.setLbs_lng("1");
             locationDao.addLocation(location);
 
-            //更新用户信息
-//            User user = userDao.selectByUsername(username);
-//            user.setLng(SocketServer.wifi_lon);
-//            user.setLat(SocketServer.wifi_lat);
-//            user.setGps("0");
-//            user.setLbs("0");
-//            user.setWifi("0");
-//            userDao.updateLocation(user);
-
-
             jsonBytes = json.toString().getBytes("utf-8");
             response.setContentLength(jsonBytes.length);
             response.getOutputStream().write(jsonBytes);

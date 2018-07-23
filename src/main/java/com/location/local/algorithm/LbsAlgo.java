@@ -22,7 +22,7 @@ public class LbsAlgo {
      * @param bytes  表示得到到字符串
      * @return cellid 返回lbs地址
      * */
-    private static String lbsToLac(int counts,byte[] bytes){
+    public static String lbsToLac(int counts,byte[] bytes){
         StringBuilder lac = new StringBuilder();
         char a;
         //wifi数量
@@ -46,7 +46,7 @@ public class LbsAlgo {
      * @param bytes  表示得到到字符串
      * @return cellid 返回lbs地址
      * */
-    private static String lbsToCi(int counts,byte[] bytes){
+    public static String lbsToCi(int counts,byte[] bytes){
         StringBuilder ci = new StringBuilder();
         char a;
         //wifi数量
@@ -69,7 +69,7 @@ public class LbsAlgo {
      * @param counts 表示想获取第几个基站的数据
      * @param bytes  表示lbs信息的字符串
      */
-    private static int lacToMciss(int counts,byte[] bytes){
+    public static int lacToMciss(int counts,byte[] bytes){
         StringBuilder mciss = new StringBuilder();
         char a;
         //wifi数量

@@ -39,6 +39,8 @@ public class ApController {
                 json.put("Blat", ap.getBlat());
                 json.put("Clng", ap.getClng());
                 json.put("Clat", ap.getClat());
+                json.put("Lbslng",ap.getLbslng());
+                json.put("Lbslat",ap.getLbslat());
             }
 
             jsonBytes = json.toString().getBytes("utf-8");

@@ -12,9 +12,43 @@ public class Ap {
     private String Blat;
     private String Clng;
     private String Clat;
+    private String Lbslng;
+    private String Lbslat;
     private Date created_time;
 
     public Ap(){ }
+
+    @Override
+    public String toString() {
+        return "Ap{" +
+                "username='" + username + '\'' +
+                ", Alng='" + Alng + '\'' +
+                ", Alat='" + Alat + '\'' +
+                ", Blng='" + Blng + '\'' +
+                ", Blat='" + Blat + '\'' +
+                ", Clng='" + Clng + '\'' +
+                ", Clat='" + Clat + '\'' +
+                ", Lbslng='" + Lbslng + '\'' +
+                ", Lbslat='" + Lbslat + '\'' +
+                ", created_time=" + created_time +
+                '}';
+    }
+
+    public String getLbslng() {
+        return Lbslng;
+    }
+
+    public void setLbslng(String lbslng) {
+        Lbslng = lbslng;
+    }
+
+    public String getLbslat() {
+        return Lbslat;
+    }
+
+    public void setLbslat(String lbslat) {
+        Lbslat = lbslat;
+    }
 
     public int getId() {
         return id;
@@ -80,11 +114,7 @@ public class Ap {
         Clat = clat;
     }
 
-    public Date getCreated_time() {
-        return created_time;
-    }
+    public Date getDate_time() { return created_time; }
 
-    public void setCreated_time(Date created_time) {
-        this.created_time = created_time;
-    }
+    public void setDate_time(Date date_time) { this.created_time = date_time; }
 }
