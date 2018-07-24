@@ -14,21 +14,29 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
 //@Sql("/init-schema.sql")
 public class DatabaseTests {
-    @Resource
-    UserDao userDao;
+
     @Test
     public void test(){
-        User user=userDao.selectByUsername("wcw");
-        user.setLng("1212");
-        user.setLat("222");
-        userDao.updateLocation(user);
+
+       // System.out.println(Double.valueOf(null));
     }
+    public void fun(double Xa, double Ya, double Xb, double Yb,double da,double db){
+        int x;
+        int y;
+
+
+    }
+
+
 
 
 }

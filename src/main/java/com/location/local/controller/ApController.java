@@ -39,8 +39,12 @@ public class ApController {
                 json.put("Blat", ap.getBlat());
                 json.put("Clng", ap.getClng());
                 json.put("Clat", ap.getClat());
-                json.put("Lbslng",ap.getLbslng());
-                json.put("Lbslat",ap.getLbslat());
+                json.put("ALbslng",ap.getALbslng());
+                json.put("ALbslat",ap.getALbslat());
+                json.put("BLbslng",ap.getBLbslng());
+                json.put("BLbslat",ap.getBLbslat());
+                json.put("CLbslng",ap.getCLbslng());
+                json.put("CLbslat",ap.getCLbslat());
             }
 
             jsonBytes = json.toString().getBytes("utf-8");
@@ -48,12 +52,9 @@ public class ApController {
             response.getOutputStream().write(jsonBytes);
             response.getOutputStream().flush();
             response.getOutputStream().close();
-
-            System.out.println("<<<<<<<<<<< "+  "username=  " + username + "AP MSG>>>>>>>>>>>");
-
+            System.out.println("<<<<<<<<<<< "+  "username= " + username + "  AP MSG>>>>>>>>>>>");
         } catch (Exception e) {
             e.printStackTrace();
-
         }
         return null;
 

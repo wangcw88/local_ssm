@@ -18,12 +18,12 @@ public class LbsAlgo {
 
     //提取wifi/lbs数据包中基站的地址--lac
     /**
-     * @param counts 为Wi-Fi数量
+     * @param counts 为第几个Lbs数量
      * @param bytes  表示得到到字符串
      * @return cellid 返回lbs地址
      * */
     public static String lbsToLac(int counts,byte[] bytes){
-        StringBuilder lac = new StringBuilder();
+        StringBuffer lac = new StringBuffer();
         char a;
         //wifi数量
         int wifi_count = bytes[5]-48;
@@ -34,7 +34,7 @@ public class LbsAlgo {
             return null;
         }
         for(int i=0;i<4;i++){
-            a=(char)bytes[22+wifi_count*14+i+counts*10];
+            a=(char)bytes[28+wifi_count*14+i+(counts-1)*10];
             lac.append(a);
         }
 
@@ -42,12 +42,12 @@ public class LbsAlgo {
     }
     //提取wifi/lbs数据包中基站的地址--cellid
     /**
-     * @param counts 为Wi-Fi数量
+     * @param counts 为第几个Lbs数量
      * @param bytes  表示得到到字符串
      * @return cellid 返回lbs地址
      * */
     public static String lbsToCi(int counts,byte[] bytes){
-        StringBuilder ci = new StringBuilder();
+        StringBuffer ci = new StringBuffer();
         char a;
         //wifi数量
         int wifi_count = bytes[5]-48;
@@ -58,7 +58,7 @@ public class LbsAlgo {
             return null;
         }
         for(int i=4;i<8;i++){
-            a=(char)bytes[22+wifi_count*14+i+counts*10];
+            a=(char)bytes[28+wifi_count*14+i+(counts-1)*10];
             ci.append(a);
         }
 
@@ -66,11 +66,23 @@ public class LbsAlgo {
     }
 
     /**
+     * @param
+     */
+    public static int LbsCount(byte[] bytes){
+        //wifi数量
+        int wifi_count = bytes[5]-48;
+        //基站数量
+        return bytes[21+14*wifi_count]-48;
+    }
+
+
+
+    /**
      * @param counts 表示想获取第几个基站的数据
      * @param bytes  表示lbs信息的字符串
      */
     public static int lacToMciss(int counts,byte[] bytes){
-        StringBuilder mciss = new StringBuilder();
+        StringBuffer mciss = new StringBuffer();
         char a;
         //wifi数量
         int wifi_count = bytes[5]-48;
@@ -81,7 +93,7 @@ public class LbsAlgo {
             return 0;
         }
         for(int i=8;i<10;i++){
-            a=(char)bytes[22+wifi_count*14+i+counts*10];
+            a=(char)bytes[28+wifi_count*14+i+(counts-1)*10];
             mciss.append(a);
         }
 

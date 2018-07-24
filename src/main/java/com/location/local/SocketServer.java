@@ -26,6 +26,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.net.*;
 import java.net.Socket;
+
+import static java.lang.Double.doubleToLongBits;
 import static java.lang.Double.valueOf;
 
 //@ComponentScan("com.location.local")
@@ -191,7 +193,10 @@ public class SocketServer implements Runnable {
 
                 }
                 if(bytes[6]==56 && bytes[7]==48){
-
+//                    os.write(b_heart);
+//                    os.flush();
+//                    System.out.println(bytesToHexString(b_heart));
+//                    System.out.println();
                 }
 
                 //wifi数据协议0x69
@@ -202,11 +207,16 @@ public class SocketServer implements Runnable {
                     boolean a;
                     boolean b;
                     boolean c;
+                    boolean d;
                     String[][] array;
                     double[] A = new double[3];
                     double[] B = new double[3];
                     double[] C = new double[3];
-                    double[] D = new double[2];
+                    double[] D ;
+
+                    double[] X = new double[2];
+                    double[] Y = new double[2];
+                    double[] Z = new double[2];
 
                     //将每个热点的mac地址和对应的信号rssi存放进二维数组中
                     array = macrssi(count, bytes);
@@ -221,16 +231,46 @@ public class SocketServer implements Runnable {
                     c = wifiMsg(array, 3, C, false);
 
                     //对LBS数据进行处理
-                    LbsAlgo.LBSLocation(LbsAlgo.lbsToLac(count,bytes),LbsAlgo.lbsToCi(count,bytes));
+                    if(LbsAlgo.LbsCount(bytes)>=3) {
+                        d=true;
+                        LbsAlgo.LBSLocation(LbsAlgo.lbsToLac(1, bytes), LbsAlgo.lbsToCi(1, bytes));
+                        X[1]= Double.valueOf(LbsAlgo.lbs_lat);
+                        X[0]= Double.valueOf(LbsAlgo.lbs_lon);
+                        LbsAlgo.LBSLocation(LbsAlgo.lbsToLac(2, bytes), LbsAlgo.lbsToCi(2, bytes));
+                        Y[1]= Double.valueOf(LbsAlgo.lbs_lat);
+                        Y[0]= Double.valueOf(LbsAlgo.lbs_lon);
+                        LbsAlgo.LBSLocation(LbsAlgo.lbsToLac(3, bytes), LbsAlgo.lbsToCi(3, bytes));
+                        Z[1]= Double.valueOf(LbsAlgo.lbs_lat);
+                        Z[0]= Double.valueOf(LbsAlgo.lbs_lon);
+                    }else {
+                        d=false;
+//                        System.out.println(LbsAlgo.lbsToLac(1, bytes));
+//                        System.out.println(LbsAlgo.lbsToCi(1, bytes));
+                        LbsAlgo.LBSLocation(LbsAlgo.lbsToLac(1, bytes), LbsAlgo.lbsToCi(1, bytes));
+                        X[1]= Double.valueOf(LbsAlgo.lbs_lat);
+                        X[0]= Double.valueOf(LbsAlgo.lbs_lon);
+                        LbsAlgo.LBSLocation(LbsAlgo.lbsToLac(2, bytes), LbsAlgo.lbsToCi(2, bytes));
+                        Y[1]= Double.valueOf(LbsAlgo.lbs_lat);
+                        Y[0]= Double.valueOf(LbsAlgo.lbs_lon);
+
+                    }
+
+
+
 
                     //进行三角定位 并插入或者更新数据库
-                    if (a & b & c) {
+                    if (a && b && c ) {
                         D = WifiAlgo.locAlgorithm(A, B, C);
-
                         wifi_lat = String.valueOf(D[1]);
                         wifi_lon = String.valueOf(D[0]);
-                        locationService.saveApInDb(A,B,C,"qwer");
-                        userService.saveInSQL(D,"qwer");
+                        if(d) {
+                            locationService.saveApInDb(A, B, C, X, Y, Z, "qwer");
+                            userService.saveInSQL(D, "qwer");
+                        }
+                        else {
+                            locationService.saveApInDb(A, B, C, X, Y, "qwer");
+                            userService.saveInSQL(D, "qwer");
+                        }
 
                     }
 

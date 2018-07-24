@@ -40,7 +40,7 @@ public class LocationController {
             String username = request.getParameter("username");
             String latitude = request.getParameter("latitude");
             String longitude = request.getParameter("longitude");
-            System.out.println("<<<<<<<<<<<"+  "username=  " + username + "　ＧＥＴ　ＧＰＳ　ＭＳＧ　>>>>>>>>>>>");
+            System.out.println("<<<<<<<<<<<"+  "username= " + username + "　ＧＥＴ　ＧＰＳ　ＭＳＧ　>>>>>>>>>>>");
             System.out.println(latitude);
             System.out.println(longitude);
             json = new HashMap<String, String>();
@@ -84,7 +84,7 @@ public class LocationController {
 
             User user = userDao.selectByUsername(username);
 
-            System.out.println("<<<<<<<<<<<  "+  "username=  " + username + "W O T K~!>>>>>>>>>>>");
+            System.out.println("<<<<<<<<<<<  "+  "username= " + username + "  W O T K~!>>>>>>>>>>>");
 
             json = new HashMap<String, String>();
             if (user.getLat() != null && user.getLng() != null) {

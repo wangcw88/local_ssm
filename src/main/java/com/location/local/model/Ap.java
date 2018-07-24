@@ -12,8 +12,12 @@ public class Ap {
     private String Blat;
     private String Clng;
     private String Clat;
-    private String Lbslng;
-    private String Lbslat;
+    private String ALbslng;
+    private String ALbslat;
+    private String BLbslng;
+    private String BLbslat;
+    private String CLbslng;
+    private String CLbslat;
     private Date created_time;
 
     public Ap(){ }
@@ -28,26 +32,62 @@ public class Ap {
                 ", Blat='" + Blat + '\'' +
                 ", Clng='" + Clng + '\'' +
                 ", Clat='" + Clat + '\'' +
-                ", Lbslng='" + Lbslng + '\'' +
-                ", Lbslat='" + Lbslat + '\'' +
+                ", ALbslng='" + ALbslng + '\'' +
+                ", ALbslat='" + ALbslat + '\'' +
+                ", BLbslng='" + BLbslng + '\'' +
+                ", BLbslat='" + BLbslat + '\'' +
+                ", CLbslng='" + CLbslng + '\'' +
+                ", CLbslat='" + CLbslat + '\'' +
                 ", created_time=" + created_time +
                 '}';
     }
 
-    public String getLbslng() {
-        return Lbslng;
+    public String getALbslng() {
+        return ALbslng;
     }
 
-    public void setLbslng(String lbslng) {
-        Lbslng = lbslng;
+    public void setALbslng(String ALbslng) {
+        this.ALbslng = ALbslng;
     }
 
-    public String getLbslat() {
-        return Lbslat;
+    public String getALbslat() {
+        return ALbslat;
     }
 
-    public void setLbslat(String lbslat) {
-        Lbslat = lbslat;
+    public void setALbslat(String ALbslat) {
+        this.ALbslat = ALbslat;
+    }
+
+    public String getBLbslng() {
+        return BLbslng;
+    }
+
+    public void setBLbslng(String BLbslng) {
+        this.BLbslng = BLbslng;
+    }
+
+    public String getBLbslat() {
+        return BLbslat;
+    }
+
+    public void setBLbslat(String BLbslat) {
+        this.BLbslat = BLbslat;
+    }
+
+    public String getCLbslng() {
+        return CLbslng;
+    }
+
+    public void setCLbslng(String CLbslng) {
+        this.CLbslng = CLbslng;
+    }
+
+    public String getCLbslat() {
+        return CLbslat;
+    }
+
+    public void setCLbslat(String CLbslat) {
+        this.CLbslat = CLbslat;
     }
 
     public int getId() {
